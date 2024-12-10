@@ -1,0 +1,39 @@
+---
+const { withLabel, label, name, type, placeholder, required , id , accept , classText , autocomplete , value } = Astro.props;
+---
+
+{withLabel && <label for={id}>{label}</label>}
+<input
+	{...(accept && { accept: accept })}
+	{...(value && { value: value })}
+	autocomplete={autocomplete}
+    type={type}
+    id={id}
+    name={name}
+	class={classText}
+    placeholder={placeholder}
+    required={required}
+/>
+
+
+<style>
+    label {
+		display: block;
+		margin-bottom: 0.5rem;
+		color: #4a5568;
+		font-size: 0.95rem;
+	}
+
+	input {
+		width: 100%;
+		padding: 0.75rem 1rem;
+		border-radius: 0.5rem;
+		font-size: 1rem;
+		transition: border-color 0.2s ease;
+	}
+
+	input:focus {
+		outline: none;
+		border-color: #667eea;
+	}
+</style>

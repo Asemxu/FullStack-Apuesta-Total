@@ -1,0 +1,119 @@
+---
+import { ClientRouter } from "astro:transitions";
+import Header from "@/components/shared/header.astro"
+import { actions } from 'astro:actions';
+import MainContainer from "@/components/shared/mainContainer.astro"
+export const prerender = false;
+let user
+const { isUser} = Astro.props;
+const { data } = await Astro.callAction(actions.getCookies,{}) || {};
+
+if(data){
+	user = JSON.parse(data.value)
+}
+---
+
+<!doctype html>
+<html lang="en">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>FullStack Apuesta Total</title>
+		<ClientRouter/>
+	</head>
+	<body class="h-screen flex flex-col justify-center">
+		{
+			isUser && (
+				<Header user={user}/>
+				<MainContainer typeUser={user?.role}>
+					<slot />
+				</MainContainer>
+				
+			)
+		}
+		{!isUser && <slot />}
+	</body>
+</html>
+<script>
+	import { navigate } from "astro:transitions/client";
+	import isValidLogin from "@/validators/isValidLogin"
+	import type { Validation } from "@/interfaces/validation";
+	import showError from "@/utils/showError"
+	import clearFormErrors from "@/utils/clearFormErrors"
+	import showOrHideLoader from "@/utils/showOrHideLoader"
+	import { FORMTYPES, HTMLELEMENTS, MESSAGES, ROUTES, VISIBILITY } from "@/helpers/constants";
+	import { actions } from 'astro:actions';
+import isAdmin from "@/utils/isAdmin";
+
+	const submitLogin = async (formLogin: FormData) => {
+		const email = formLogin.get('email')
+    	const password = formLogin.get('password')
+		const loginInfo = {
+			username : email,
+			password : password
+		}
+		try {
+			const response = await fetch(`${import.meta.env.PUBLIC_URLAPI}auth`, {
+				method: 'POST',
+				headers: {
+				'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(loginInfo)
+			});
+			const data = await response.json();
+			showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
+			if (response.ok) {
+				await actions.setCookies({
+					email: data.email,
+					role: data.rol,
+					token: data.token
+				});
+				if(isAdmin(data.role)) {
+					navigate(ROUTES.ADMIN.ACCEPTREQUEST)
+
+				}else{
+					navigate(ROUTES.USER.UPLOADPOKEMONS)
+				}
+			} else {
+				showError({
+					status: false,
+					message: data.message,
+					nameError : MESSAGES.LOGIN.ERROR.EMAIL.NAME
+				} as Validation)
+			}
+		} catch (error) {
+			alert(error);
+		}
+	}
+
+	document.addEventListener(HTMLELEMENTS.EVENTS.ONCLICK, async (event) => {
+		const element = event.target as HTMLElement;
+		if(element.className.includes(HTMLELEMENTS.INCLUDE.LOGINBUTTON)){
+			event.preventDefault()
+			showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.SHOW)
+			clearFormErrors(FORMTYPES.LOGIN)
+			const formLogin = document.querySelector(HTMLELEMENTS.ID.FORMLOGIN) as HTMLFormElement
+			const formData = new FormData(formLogin)
+			const isValid : Validation = isValidLogin(formData) as Validation
+			if(isValid.status){
+				submitLogin(formData)
+				clearFormErrors(FORMTYPES.LOGIN)
+			}else {
+				showError(isValid)
+
+			}
+		}
+		
+		if(element.className.includes(HTMLELEMENTS.INCLUDE.LOGOUTBUTTON)){
+			event.preventDefault()
+			await actions.clearCookies({});
+			navigate(ROUTES.LOGIN)
+		}
+	});
+</script>
+<style is:global>
+	.bg-gradient {
+		background: linear-gradient(135deg, #135d6e, #667eea 0%, #764ba2 100%);
+	}
+</style>

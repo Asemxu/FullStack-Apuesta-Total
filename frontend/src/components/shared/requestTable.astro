@@ -1,0 +1,49 @@
+---
+import { REQUEST } from "@/helpers/constants";
+
+const { requests, showActions } = Astro.props;
+---
+
+<div class="max-h-[350px] overflow-y-auto hidden md:block">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="bg-gray-800 text-left">
+        <th class="p-4 text-white font-semibold">ID USER</th>
+        <th class="p-4 text-white font-semibold">REGISTRADOS</th>
+        <th class="p-4 text-white font-semibold">Archivo</th>
+        <th class="p-4 text-white font-semibold">Medalla</th>
+        {!showActions && <th class="p-4 text-white font-semibold">Estado</th>}
+        {showActions && <th class="p-4 text-white font-semibold">Acciones</th>}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        requests.map((request: any) => (
+          <tr class="border-b border-gray-700 hover:bg-gray-800/50">
+            <td class="p-4 text-white font-semibold">{request.id_username}</td>
+            <td class="p-4 text-white font-semibold">
+              {request.total_pokemons}
+            </td>
+            <td class="p-4 text-white font-semibold">.CSV</td>
+            <td class="p-4 text-white font-semibold">{request.medal}</td>
+            {!showActions && (
+              <td >
+                <span class={`px-4 rounded-lg py-2 font-semibold  text-white ${request.status === REQUEST.STATUS.ACCEPTED.VALUE ? 'bg-green-900' : 'bg-red-900'}`}>{request.status === REQUEST.STATUS.ACCEPTED.VALUE ? REQUEST.STATUS.ACCEPTED.TEXT : REQUEST.STATUS.REJECTED.TEXT} </span>
+              </td>
+            )}
+            {showActions && (
+              <td class="p-4 space-x-2">
+                <button class="transition duration-500 px-4 py-2 font-semibold bg-green-900 text-white rounded-lg hover:bg-green-500">
+                  Aceptar
+                </button>
+                <button class="transition duration-500 px-4 py-2 font-semibold bg-red-900 text-white rounded-lg hover:bg-red-500">
+                  Rechazar
+                </button>
+              </td>
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

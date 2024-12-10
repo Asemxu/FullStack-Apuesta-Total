@@ -1,0 +1,25 @@
+---
+const { type, text, classText , id  } = Astro.props;
+---
+
+
+
+<button  id={id} class={classText}  type={type}>{text}</button>
+
+<style>
+	button {
+		padding: 0.75rem;
+		background: #667eea;
+		color: white;
+		border: none;
+		border-radius: 0.5rem;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.2s ease;
+	}
+
+	button:hover {
+		background: #5a67d8;
+	}
+</style>

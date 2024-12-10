@@ -1,0 +1,55 @@
+---
+import { REQUEST } from "@/helpers/constants";
+
+const { request, showActions } = Astro.props;
+---
+
+<div class="bg-gray-800 p-4 rounded-lg border border-gray-700 space-y-2">
+    <div class="flex justify-between items-start">
+        <div>
+            <p class="text-white">
+                <span class="font-semibold">ID USER:</span>
+                {request.id_username}
+            </p>
+            <p class="text-white">
+                <span class="font-semibold">Registrados:</span>
+                {request.total_pokemons}
+            </p>
+        </div>
+        <div class="text-right">
+            <p class="text-white">
+                <span class="font-semibold">Archivo: .CSV</span>
+            </p>
+            <p class="text-white">
+                <span class="font-semibold">Medalla:</span>
+                {request.medal}
+            </p>
+        </div>
+    </div>
+    {
+        !showActions && (
+            <p class="flex items-center gap-5 text-white">
+                <span class="font-semibold">Estado:</span>
+                <span
+                    class={`px-4 rounded-lg py-2 font-semibold  text-white ${request.status === REQUEST.STATUS.ACCEPTED.VALUE ? "bg-green-900" : "bg-red-900"}`}
+                >
+                    {request.status === REQUEST.STATUS.ACCEPTED.VALUE
+                        ? REQUEST.STATUS.ACCEPTED.TEXT
+                        : REQUEST.STATUS.REJECTED.TEXT}{" "}
+                </span>
+            </p>
+        )
+    }
+    {
+        showActions && (
+            <div class="flex gap-2 mt-4">
+                <button class="transition duration-500 font-semibold flex-1 px-4 py-2 bg-green-900 text-white rounded-lg hover:bg-green-500">
+                    Aceptar
+                </button>
+                <button class="transition duration-500 font-semibold flex-1 px-3 py-2 bg-red-900 text-white rounded-lg hover:bg-red-500">
+                    Rechazar
+                </button>
+            </div>
+        )
+    }
+</div>

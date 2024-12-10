@@ -1,0 +1,27 @@
+---
+import haveAchivement from "@/utils/haveAchievement";
+
+const { medal, totalMedals , index } = Astro.props;
+---
+
+<div class={` text-center`}>
+    <img
+        class={`rounded-full shadow-2xl shadow-2xl ${index === totalMedals -1 ? 'medal highlight' : 'medal'}`}
+        src={`/medals/${medal.image}.jpg`}
+        alt={medal.name}
+        title={medal.name}
+    />
+    <p class="mt-2 leading-4">{medal.name} {index === totalMedals -1 && '(Medalla Actual)'} </p>
+</div>
+
+<style>
+    .medal.highlight {
+        border: 2px solid gold;
+        background-color: rgba(255, 215, 0, 0.2);
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        transform: scale(1.1);
+        transition:
+            transform 0.3s,
+            box-shadow 0.3s;
+    }
+</style>

@@ -1,0 +1,17 @@
+---
+import Button from "./button.astro";
+
+const { classText } = Astro.props
+---
+
+<div class={classText}>
+    <Button
+        type="button"
+        classText="text-white btn-logout text-right"
+        text="Cerrar Sesión"
+        id="btn-logout"
+    />
+</div>
+<script >
+    
+</script>

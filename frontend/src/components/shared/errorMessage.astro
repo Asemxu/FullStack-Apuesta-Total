@@ -1,0 +1,6 @@
+---
+const { message , idError , isHidden} = Astro.props
+---
+<h2 id={idError} class={`mt-1 text-red-900 ${isHidden ? 'hidden' : 'block'}`}>
+    {message} 😔
+</h2>

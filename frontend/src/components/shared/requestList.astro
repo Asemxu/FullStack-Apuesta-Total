@@ -1,0 +1,13 @@
+---
+import RequestCard from "./requestCard.astro"
+const { requests , showActions} = Astro.props
+---
+<div class="grid gap-4 md:hidden">
+    {requests.map((request:any) => (
+      <RequestCard
+        key={request.id}
+        request={request}
+        showActions={showActions}
+      />
+    ))}
+  </div>

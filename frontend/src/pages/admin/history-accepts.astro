@@ -1,0 +1,71 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import RequestTable from "@/components/shared/requestTable.astro";
+import RequestList from "@/components/shared/requestList.astro";
+import { actions } from "astro:actions";
+import isAdmin from "@/utils/isAdmin";
+import { DEFAULTVALUES, MESSAGES, ROUTES, STATUS } from "@/helpers/constants";
+import type { User } from "@/interfaces/user";
+import { navigate } from "astro:transitions/client";
+import ErrorMessage from "@/components/shared/errorMessage.astro";
+
+let user: User
+const { data } = await Astro.callAction(actions.getCookies,{}) || {};
+
+if(data){
+	user = JSON.parse(data.value) as User
+	if(!isAdmin(user.role))
+		return Astro.redirect(ROUTES.USER.UPLOADPOKEMONS);
+}else{
+    return Astro.redirect(ROUTES.LOGIN)
+}
+
+const Error = {
+    have : DEFAULTVALUES.NOTERROR,
+    message : DEFAULTVALUES.EMPTY
+}
+
+const responseAccepts = await fetch(
+    `${import.meta.env.PUBLIC_URLAPI}admin/listHistory`,
+    {
+        method: "GET",
+        headers: {
+            Authorization: "Bearer " + user.token,
+        },
+    },
+);
+
+let mockProcessedRequests
+if (responseAccepts.ok) {
+    mockProcessedRequests  = await responseAccepts.json()
+} else {
+    if (responseAccepts.status === STATUS.HTTP.EXPIREDAUTHORIZATION) {
+        await actions.clearCookies({});
+        navigate(ROUTES.LOGIN);
+    } else {
+        Error.have = true
+        Error.message = MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT
+    }
+}
+
+---
+
+<Layout isUser>
+    <section class="container space-y-4 py-4">
+        <h2
+            class="text-lg md:text-xl text-white font-semibold px-4 md:px-0"
+        >
+            Sección de solicitudes de envíos de .csv de usuarios por procesar
+        </h2>
+        {!Error.have ?  (
+            <RequestTable
+                requests={mockProcessedRequests}
+                showActions={false}
+            />
+            <RequestList
+                requests={mockProcessedRequests}
+                showActions={false}
+            />
+        ) : <ErrorMessage isHidenn={false} message={Error.message}/>}
+    </section>
+</Layout>

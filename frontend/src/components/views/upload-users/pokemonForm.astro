@@ -1,0 +1,133 @@
+---
+import Input from "@/components/shared/input.astro";
+import Button from "@/components/shared/button.astro";
+import { ROUTES } from "@/helpers/constants";
+import ProgressBar from "@/components/shared/progressBar.astro";
+import MedalForm from "./medalForm.astro";
+
+const { token } = Astro.props;
+---
+
+<div
+    class="w-full max-w-md mx-auto bg-gray-900 rounded-xl shadow-lg overflow-hidden p-6 space-y-6"
+>
+    <h2 class="text-xl text-pokemon-light font-semibold text-center">
+        ¿Cuántos pokémones encontraste hoy?
+    </h2>
+
+    <form class="space-y-4" id="form-pokemons">
+        <Input
+            type="file"
+            classText="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pokemon-blue file:text-white hover:file:bg-pokemon-light cursor-pointer"
+            accept=".csv"
+            name="file"
+            id="file"
+            required
+        />
+        <Input type="hidden" value={token} id="tokenuser" />
+
+        <Button
+            classText="w-full bg-pokemon-blue hover:bg-pokemon-light text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
+            text="Enviar"
+            type="submit"
+        />
+    </form>
+
+    <div class="mt-6 text-center">
+        <div class="inline-block">
+            <MedalForm />
+            <ProgressBar id="progress-bar-pokemon" />
+        </div>
+
+        <p class="mt-4 text-gray-400">
+            <a
+                href={ROUTES.USER.ACHIEVEMENTS}
+                class="text-pokemon-light hover:text-white transition-colors duration-300"
+            >
+                ver mis medallas
+            </a>
+        </p>
+    </div>
+</div>
+
+<script>
+    import { MESSAGES, ROUTES } from "@/helpers/constants";
+    import { STATUS } from "@/helpers/constants";
+    import {
+        CLASSES,
+        HTMLELEMENTS,
+        MEDALS,
+        POKEMONS,
+    } from "@/helpers/constants";
+import { actions } from "astro:actions";
+import { navigate } from "astro:transitions/client";
+
+    const formPokemons = document.querySelector(
+        HTMLELEMENTS.ID.FORMPOKEMONS,
+    ) as HTMLFormElement;
+
+    formPokemons?.addEventListener("submit", async (event) => {
+        const progressBar = document.querySelector(
+            HTMLELEMENTS.ID.PROGRESSBARUPLOADPOKEMON,
+        ) as HTMLElement;
+
+        progressBar.classList.add(CLASSES.HIDDEN);
+
+        event.preventDefault();
+        const formData = new FormData(formPokemons);
+        const token = document.querySelector(
+            HTMLELEMENTS.ID.TOKENUSER,
+        ) as HTMLInputElement;
+        const responseExcel = await fetch(
+            `${import.meta.env.PUBLIC_URLAPI}user/upload`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + token.value,
+                },
+                body: formData,
+            },
+        );
+        if (responseExcel.ok) {
+            const { register } = await responseExcel.json();
+            if (register < POKEMONS.MIN) {
+                progressBar.classList.remove(CLASSES.HIDDEN);
+
+                const infoProgress = document.querySelector(
+                    HTMLELEMENTS.ID.PROGRESSBARUPLOADPOKEMONINFO,
+                ) as HTMLElement;
+
+                infoProgress.textContent = `${register}/10`;
+                alert("Te faltan al menos " + (10 - register));
+            } else {
+                const filteredMedals = Object.entries(MEDALS).findLast(
+                    ([, medal]) => {
+                        return medal.MAX_ACCEPT <= register;
+                    },
+                );
+                if (filteredMedals) {
+                    const medalImage = filteredMedals[1];
+                    const medalForm = document.querySelector(
+                        HTMLELEMENTS.ID.MEDALFORM,
+                    ) as HTMLElement;
+                    const medalFormImage = document.querySelector(
+                        HTMLELEMENTS.ID.MEDALFORMIMAGE,
+                    ) as HTMLImageElement;
+
+                    medalFormImage.src = `/medals/${medalImage.image}.jpg`;
+                    medalForm.textContent = `Por verificar (${medalImage.name})`;
+                    medalFormImage.classList.remove(CLASSES.HIDDEN);
+                }
+            }
+            alert("Pokemones subidos para su aprobacion");
+        } else {
+            if (responseExcel.status === STATUS.HTTP.EXPIREDAUTHORIZATION) {
+                event.preventDefault();
+                await actions.clearCookies({});
+                navigate(ROUTES.LOGIN)
+            } else {
+                alert(MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT);
+            }
+        }
+    });
+</script>

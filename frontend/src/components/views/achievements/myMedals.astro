@@ -1,0 +1,45 @@
+---
+import { MEDALS, NOTMEDALS } from "@/helpers/constants";
+import Medal from "./medal.astro";
+import haveAchivement from "@/utils/haveAchievement";
+import type { MedalI } from "@/interfaces/medal";
+const { totalPokemons } = Astro.props;
+
+const filteredMedals: Record<string, MedalI> = Object.keys(MEDALS)
+  .filter(key => MEDALS[key].MAX_ACCEPT <= totalPokemons)
+  .reduce((obj: Record<string, MedalI>, key: string) => {
+    obj[key] = MEDALS[key];
+    return obj;
+  }, {});
+
+const totalMedalsGet = Object.entries(filteredMedals).length
+---
+
+<div
+    class={`container grid-medals bg-gray-900 rounded-xl shadow-lg overflow-hidden py-4 px-6 ${totalPokemons === NOTMEDALS ? "opacity-50" : "opacity-100"}`}
+>   
+    {totalPokemons !== NOTMEDALS ? Object.entries(filteredMedals).map(([key,medal],index) => {
+        return (
+            haveAchivement(totalPokemons,medal.MAX_ACCEPT) && <Medal key={key} medal={medal} totalMedals={totalMedalsGet} index={index} />
+        )
+    }) : 
+        <h5 class="text-center">Sin Medallas</h5>
+    }
+
+</div>
+
+<style>
+    .grid-medals {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(4.45rem, 1fr));
+        gap: 1rem;
+
+        div{
+            width: 100%;
+            img {
+            width: 100%;
+            height: auto;
+            }
+        }
+    }
+</style>

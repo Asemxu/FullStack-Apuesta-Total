@@ -1,0 +1,23 @@
+---
+
+import Layout from "@/layouts/Layout.astro";
+import { actions } from 'astro:actions';
+import LoginForm from "@/components/views/login/loginForm.astro";
+import { ROUTES } from "@/helpers/constants";
+import type { User } from "@/interfaces/user";
+import isAdmin from "@/utils/isAdmin";
+
+const { data } = await Astro.callAction(actions.getCookies,{}) || {};
+if(data){
+	const user: User = JSON.parse(data.value) as User
+	if(isAdmin(user.role))
+		return Astro.redirect(ROUTES.ADMIN.ACCEPTREQUEST);
+	else
+		return Astro.redirect(ROUTES.USER.UPLOADPOKEMONS);
+}
+---
+
+
+<Layout>
+	<LoginForm />
+</Layout>

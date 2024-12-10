@@ -3,12 +3,14 @@
     - Notificaciones  -> (FrontEnd y BackEnd)
 
 2. FrontEnd 
-    - React
+    - Astro
     - Tailwind CSS
-    - Zustang
+    - NanoStores
+    - Typescript
 
 3. BackEnd
     - Express
+    - Javacscript
     - Sequelize
     - JWT
     - Zod (Validation)

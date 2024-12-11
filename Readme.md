@@ -61,12 +61,12 @@ Sigue estos pasos para configurar el proyecto localmente:
    ```bash
    cd FullStack-Apuesta-Total
 
-4. cd frontend y cd backend y
+4. cd frontend y cd backend:
 
    ```bash
    npm install
 
-4. Inicia la aplicación en frontend y backend y:
+4. Inicia la aplicación en frontend y backend:
 
    ```bash 
     npm run dev // para frontend

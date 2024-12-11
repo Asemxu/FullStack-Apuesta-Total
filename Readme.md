@@ -8,6 +8,7 @@
 
 2. FrontEnd 
     - Astro
+    - Astro: View Transitions
     - Tailwind CSS
     - NanoStores
     - TypeScript

@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@astrojs/renderer-vue": "^0.4.0"
-  }
-}

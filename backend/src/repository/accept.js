@@ -28,6 +28,10 @@ const acceptRegisters = async (isAccepted, idRegister) => {
     return await accept.update({ status: isAccepted ? 1 : 2 }, { where: { id: idRegister } })
 }
 
+const getRegister = async (idRegister) => {
+    return await accept.findByPk(idRegister)
+}
+
 const getAllRegisters = async (id_username) => {
     return await accept.findAll({ where: { status: 1, id_username: id_username } })
 }
@@ -37,5 +41,6 @@ module.exports = {
     acceptRegisters,
     addAccept,
     getAll,
-    getAllRegisters
+    getAllRegisters,
+    getRegister
 };  

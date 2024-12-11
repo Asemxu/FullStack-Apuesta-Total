@@ -2,6 +2,7 @@
 import { REQUEST } from "@/helpers/constants";
 
 const { requests, showActions } = Astro.props;
+console.log(requests);
 ---
 
 <div class="max-h-[350px] overflow-y-auto hidden md:block">
@@ -33,10 +34,10 @@ const { requests, showActions } = Astro.props;
             )}
             {showActions && (
               <td class="p-4 space-x-2">
-                <button class="transition duration-500 px-4 py-2 font-semibold bg-green-900 text-white rounded-lg hover:bg-green-500">
+                <button type="button" data-id-register={request.id} data-id-user={request.user.username} data-accept-info={true} class="btn-action-accept transition duration-500 px-4 py-2 font-semibold bg-green-900 text-white rounded-lg hover:bg-green-500">
                   Aceptar
                 </button>
-                <button class="transition duration-500 px-4 py-2 font-semibold bg-red-900 text-white rounded-lg hover:bg-red-500">
+                <button type="button" data-id-register={request.id} data-id-user={request.user.username} data-accept-info={false} class="btn-action-accept transition duration-500 px-4 py-2 font-semibold bg-red-900 text-white rounded-lg hover:bg-red-500">
                   Rechazar
                 </button>
               </td>

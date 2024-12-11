@@ -14,7 +14,6 @@ const validateCSV = (schema) => (req, res, next) => {
         return res.status(400).json({ errores: result.errors });
     }
 
-    console.log(result.data)
     req.validatedData = result.data
     req.body = result.allRows
     next();

@@ -6,7 +6,7 @@ export default {
 			colors: {
 				'pokemon-blue': '#2E3192',
 				'pokemon-light': '#00B9FF'
-			}
+			},
 		},
 	},
 	plugins: [],

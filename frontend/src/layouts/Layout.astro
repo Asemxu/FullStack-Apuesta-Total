@@ -36,16 +36,19 @@ if(data){
 	</body>
 </html>
 <script>
-	import { navigate } from "astro:transitions/client";
-	import isValidLogin from "@/validators/isValidLogin"
-	import type { Validation } from "@/interfaces/validation";
-	import showError from "@/utils/showError"
-	import clearFormErrors from "@/utils/clearFormErrors"
-	import showOrHideLoader from "@/utils/showOrHideLoader"
-	import { FORMTYPES, HTMLELEMENTS, MESSAGES, ROUTES, VISIBILITY } from "@/helpers/constants";
-	import { actions } from 'astro:actions';
+import "toastify-js/src/toastify.css"
+import { navigate } from "astro:transitions/client";
+import isValidLogin from "@/validators/isValidLogin"
+import type { Validation } from "@/interfaces/validation";
+import showError from "@/utils/showError"
+import clearFormErrors from "@/utils/clearFormErrors"
+import showOrHideLoader from "@/utils/showOrHideLoader"
+import { FORMTYPES, HTMLELEMENTS, MESSAGES, ROUTES, TOAST, VISIBILITY } from "@/helpers/constants";
+import { actions } from 'astro:actions';
 import isAdmin from "@/utils/isAdmin";
-
+import getDataAttribute from "@/helpers/getDataAttribute";
+import { DEFAULTVALUES } from "@/helpers/constants";
+import showToast from "@/utils/showToast";
 	const submitLogin = async (formLogin: FormData) => {
 		const email = formLogin.get('email')
     	const password = formLogin.get('password')
@@ -83,7 +86,7 @@ import isAdmin from "@/utils/isAdmin";
 				} as Validation)
 			}
 		} catch (error) {
-			alert(error);
+			showToast(TOAST.TYPES.ERROR,MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT)
 		}
 	}
 
@@ -101,7 +104,6 @@ import isAdmin from "@/utils/isAdmin";
 				clearFormErrors(FORMTYPES.LOGIN)
 			}else {
 				showError(isValid)
-
 			}
 		}
 		
@@ -110,6 +112,50 @@ import isAdmin from "@/utils/isAdmin";
 			await actions.clearCookies({});
 			navigate(ROUTES.LOGIN)
 		}
+
+		if(element.className.includes(HTMLELEMENTS.INCLUDE.BUTTONSACTIONACCEPT)){
+			let accept = getDataAttribute(element,'accept-info','boolean')
+			const iduser = getDataAttribute(element, 'id-user', 'string'); const idregister = getDataAttribute(element, 'id-register', 'number');
+			const userToken = document.querySelector(HTMLELEMENTS.ID.TOKENUSER) as HTMLInputElement
+			try{
+				const response = await fetch(`${import.meta.env.PUBLIC_URLAPI}admin/accept`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: "Bearer " + userToken.value,
+				},
+				
+				body: JSON.stringify({
+					accept,
+					idregister,
+					iduser,
+
+				})
+				});
+				if(response.ok){
+					switch(accept){
+						case DEFAULTVALUES.ACCEPT:
+							if(MESSAGES.ACCEPT.SUCCESS)
+								showToast(TOAST.TYPES.SUCCESS,MESSAGES.ACCEPT.SUCCESS?.TEXT)
+							break;
+						case DEFAULTVALUES.REJECT:
+							if(MESSAGES.ACCEPT.REJECT)
+								showToast(TOAST.TYPES.SUCCESS,MESSAGES.ACCEPT.REJECT?.TEXT)
+							break;
+					}
+					navigate(ROUTES.ADMIN.ACCEPTREQUEST)
+
+				}else{
+					showToast(TOAST.TYPES.ERROR,MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT)
+				}
+
+			}catch(error){
+                showToast(TOAST.TYPES.ERROR,MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT)
+			}
+			
+		}
+			
+		
 	});
 </script>
 <style is:global>

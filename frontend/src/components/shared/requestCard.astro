@@ -43,10 +43,10 @@ const { request, showActions } = Astro.props;
     {
         showActions && (
             <div class="flex gap-2 mt-4">
-                <button class="transition duration-500 font-semibold flex-1 px-4 py-2 bg-green-900 text-white rounded-lg hover:bg-green-500">
+                <button type="button" data-id-register={request.id} data-id-user={request.user.username} data-accept-info={true} class="btn-action-accept transition duration-500 font-semibold flex-1 px-4 py-2 bg-green-900 text-white rounded-lg hover:bg-green-500">
                     Aceptar
                 </button>
-                <button class="transition duration-500 font-semibold flex-1 px-3 py-2 bg-red-900 text-white rounded-lg hover:bg-red-500">
+                <button type="button" data-id-register={request.id} data-id-user={request.user.username} data-accept-info={false} class=" btn-action-accept transition duration-500 font-semibold flex-1 px-3 py-2 bg-red-900 text-white rounded-lg hover:bg-red-500">
                     Rechazar
                 </button>
             </div>

@@ -8,9 +8,7 @@ import isAdmin from "@/utils/isAdmin";
 import { DEFAULTVALUES, MESSAGES, ROUTES, STATUS } from "@/helpers/constants";
 import { navigate } from "astro:transitions/client";
 import ErrorMessage from "@/components/shared/errorMessage.astro";
-
-
-
+import Input from "@/components/shared/input.astro";
 
 let user:User
 const { data } = await Astro.callAction(actions.getCookies,{}) || {};
@@ -53,22 +51,22 @@ if (responseAccepts.ok) {
 ---
 
 <Layout isUser>
-    <section class="container space-y-4 py-4 overflow-hidden">
-        <h2
-            class="text-lg md:text-xl text-white font-semibold px-4 md:px-0"
-        >
-            Sección de solicitudes de envíos de .csv de usuarios por procesar
-        </h2>
-        {!Error.have ?  (
-            <RequestTable
-                requests={mockPendingRequests}
-                showActions={true}
-            />
-            <RequestList
-                requests={mockPendingRequests}
-                showActions={true}
-            />
-        ) : <ErrorMessage isHidenn={false} message={Error.message}/>}
-       
-    </section>
+        <section class="container space-y-4 py-4 overflow-hidden">
+            <h2
+                class="text-lg md:text-xl text-white font-semibold px-4 md:px-0"
+            >
+                Sección de solicitudes de envíos de .csv de usuarios por procesar
+            </h2>
+            {!Error.have ?  (
+                <RequestTable
+                    requests={mockPendingRequests}
+                    showActions={true}
+                />
+                <RequestList
+                    requests={mockPendingRequests}
+                    showActions={true}
+                />
+            ) : <ErrorMessage isHidenn={false} message={Error.message}/>}
+           
+        </section>
 </Layout>

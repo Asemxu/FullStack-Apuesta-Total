@@ -51,12 +51,12 @@ io.on('connection', (socket) => {
   console.log('Nuevo cliente conectado');
 
   // Unir al administrador a una sala específica
-  socket.on('joinAdmin', () => {
+  socket.on('join-admin', (adminId) => {
     socket.join('admin');
-    console.log('Administrador unido a la sala admin');
+    console.log(`Administrador ${adminId} unido a la sala admin`);
   });
 
-  socket.on('join', (userId) => {
+  socket.on('join-user', (userId) => {
     socket.join(userId);
     console.log(`Usuario ${userId} se ha unido a su sala`);
   });

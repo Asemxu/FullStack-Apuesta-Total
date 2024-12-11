@@ -21,11 +21,12 @@ async function listHistory(req, res, next) {
 }
 
 async function accept(req, res, next) {
-  const { accept ,idregister , iduser } = req.body
+  const { accept ,idregister , iduser} = req.body
   try {
     const accepts = await adminService.accept(accept, idregister )
+    const accepted = await adminService.getAccepted(idregister)
     const socketio = req.app.get('socketio');
-    socketService.sendAprovadNotification(accepts, idregister , iduser ,socketio)
+    socketService.sendAprovadNotification(accept , accepted , iduser ,socketio)
     return res.json(accepts);
   } catch (ex) {
     res.status(400).json({ message: ex.message });

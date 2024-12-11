@@ -23,7 +23,7 @@ const totalMedalsGet = Object.entries(filteredMedals).length
             haveAchivement(totalPokemons,medal.MAX_ACCEPT) && <Medal key={key} medal={medal} totalMedals={totalMedalsGet} index={index} />
         )
     }) : 
-        <h5 class="text-center">Sin Medallas</h5>
+        <h5 class="text-center w-full">Sin Medallas</h5>
     }
 
 </div>
@@ -31,13 +31,20 @@ const totalMedalsGet = Object.entries(filteredMedals).length
 <style>
     .grid-medals {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(4.45rem, 1fr));
+        
+        grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
         gap: 1rem;
+        @media screen and (max-width: 640px){
+            grid-template-columns: repeat(3, minmax(1rem, 1fr));
+        };
 
+        @media screen and (max-width: 500px){
+            grid-template-columns: repeat(2, minmax(1rem, 1fr));
+        };
         div{
-            width: 100%;
+            max-width: 6rem;
+            margin: auto;
             img {
-            width: 100%;
             height: auto;
             }
         }

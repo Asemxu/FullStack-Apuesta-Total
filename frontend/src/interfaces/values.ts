@@ -1,4 +1,6 @@
 export interface DefaultValues {
     EMPTY: string;
-    NOTERROR: boolean
+    NOTERROR: boolean,
+    ACCEPT: boolean,
+    REJECT: boolean
 }

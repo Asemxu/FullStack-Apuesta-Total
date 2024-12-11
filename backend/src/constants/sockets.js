@@ -3,6 +3,9 @@ const SOCKET = {
         LOGGEDIN : "userLoggedIn",
         UPLOADCSV : "userUpload",
         APPROVALNOTIFICATION : "approvalNotification"
+    },
+    ROOM:{
+        ADMIN : "admin"
     }
 }
 

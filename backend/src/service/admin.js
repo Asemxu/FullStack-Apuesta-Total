@@ -7,8 +7,12 @@ const listAll = async (isQuery = false) => {
 const accept = async (isAccepted,idRegister) => {
     return await acceptRepository.acceptRegisters(isAccepted,idRegister)
 }
+const getAccepted = async (idRegister) => {
+    return await acceptRepository.getRegister(idRegister)
+}
 
 module.exports = {
     listAll,
+    getAccepted,
     accept
 }

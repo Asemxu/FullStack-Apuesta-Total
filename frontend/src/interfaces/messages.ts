@@ -1,4 +1,12 @@
-interface ErrorInfo {
+interface BaseInfo {
+    TEXT: string;
+    NAME?: string;
+}
+
+interface ErrorInfo extends BaseInfo {
+}
+
+interface SuccessInfo {
     TEXT: string;
     NAME?: string;
 }
@@ -10,6 +18,8 @@ interface ValidationErrors {
 
 interface ValidationMessage {
     ERROR: ValidationErrors;
+    SUCCESS?: SuccessInfo;
+    REJECT?: SuccessInfo;
 
 }
 

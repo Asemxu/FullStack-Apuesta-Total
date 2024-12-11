@@ -24,7 +24,6 @@ const { token } = Astro.props;
             id="file"
             required
         />
-        <Input type="hidden" value={token} id="tokenuser" />
 
         <Button
             classText="w-full bg-pokemon-blue hover:bg-pokemon-light text-white font-bold py-2 px-4 rounded-full transition-colors duration-300"
@@ -51,7 +50,7 @@ const { token } = Astro.props;
 </div>
 
 <script>
-    import { MESSAGES, ROUTES } from "@/helpers/constants";
+    import { MESSAGES, ROUTES, TOAST } from "@/helpers/constants";
     import { STATUS } from "@/helpers/constants";
     import {
         CLASSES,
@@ -59,8 +58,9 @@ const { token } = Astro.props;
         MEDALS,
         POKEMONS,
     } from "@/helpers/constants";
-import { actions } from "astro:actions";
-import { navigate } from "astro:transitions/client";
+    import showToast from "@/utils/showToast";
+    import { actions } from "astro:actions";
+    import { navigate } from "astro:transitions/client";
 
     const formPokemons = document.querySelector(
         HTMLELEMENTS.ID.FORMPOKEMONS,
@@ -119,14 +119,21 @@ import { navigate } from "astro:transitions/client";
                     medalFormImage.classList.remove(CLASSES.HIDDEN);
                 }
             }
-            alert("Pokemones subidos para su aprobacion");
+            if (MESSAGES.UPLOADPOKEMONS.SUCCESS)
+                showToast(
+                    TOAST.TYPES.SUCCESS,
+                    MESSAGES.UPLOADPOKEMONS.SUCCESS?.TEXT,
+                );
         } else {
             if (responseExcel.status === STATUS.HTTP.EXPIREDAUTHORIZATION) {
                 event.preventDefault();
                 await actions.clearCookies({});
-                navigate(ROUTES.LOGIN)
+                navigate(ROUTES.LOGIN);
             } else {
-                alert(MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT);
+                showToast(
+                    TOAST.TYPES.ERROR,
+                    MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT,
+                );
             }
         }
     });

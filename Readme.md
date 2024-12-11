@@ -22,6 +22,8 @@
 
 4. Base de datos 
     - MySQL
+    - Phpmyadmin
+    - Docker
 
 ## Descripción
 
@@ -46,6 +48,9 @@
 - <img src="https://th.bing.com/th?id=ODLS.9f26d577-d16e-42f8-b737-0619a7eab023&w=32&h=32&qlt=96&pcl=fffffa&o=6&pid=1.2" alt="JavaScript" width="40"/> **JavaScript**: Lenguaje de programación utilizado para la lógica del frontend y backend.
 - <img src="https://camo.githubusercontent.com/db72bc464d38be4eee48e2d78a2b186dd65d648edac38700b151164e4226c0f4/68747470733a2f2f6e616e6f73746f7265732e6769746875622e696f2f6e616e6f73746f7265732f6c6f676f2e737667" alt="NanoStores" width="40"/> **NanoStores**: Pequeña y rápida biblioteca de estado global para la gestión del estado en la aplicación.
 - <img src="https://raw.githubusercontent.com/colinhacks/zod/main/logo.svg" alt="Zod" width="40"/> **Zod**: Biblioteca de validación de esquemas para la validación de datos.
+- <img src="https://th.bing.com/th?id=OSK.c25f338db85dd6a6930e7ddce8bbb541&w=46&h=46&c=11&rs=1&qlt=80&o=6&dpr=2&pid=SANGAM" alt="Phpmyadmin" width="40"/> **Phpmyadmin**: Para la gestión de la información de la Base de datos mucho mas simple y visual mediante su interfaz gráfica.
+- <img src="https://th.bing.com/th?id=ODLS.2e5b7c8f-82fa-446a-919e-9678e88a1da1&w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="Docker" width="40"/> **Docker**: Instalación de phpmyadmin mediante docker para el consume de menos recursos y mas velocidad.
+
 
 
 ## 🧰 Instalación 

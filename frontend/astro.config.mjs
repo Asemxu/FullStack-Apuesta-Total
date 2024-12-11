@@ -12,9 +12,11 @@ export default defineConfig({
         resolve: {
             alias: {
                 '@': resolve('./src')
-            }
+            },
         }
+        
     },
+    
     devToolbar: {
         enabled: false
     }

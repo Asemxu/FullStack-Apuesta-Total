@@ -73,6 +73,14 @@ Sigue estos pasos para configurar el proyecto localmente:
 
     npm start // para backend
 
+5. Para levantar la base de datos tiene que tener mysql instalado en su maquina y de preferencia un gestor de base de datos en mi caso uso phpmyadmin. El la raiz del proyecto esta el script **bd_apuestatotal.sql** [Archivo sql](./bd_apuestatotal.sql) para generar la base de datos
+
+6. Si no tiene phpmyadmin yo levante mi base de datos con docker, dejo el archivo **docker-compose.yml** [Archivo docker](./docker-compose.yml) para que lo levante usando el comando
+
+    ```bash
+    docker compose up
+
+
 ## 📜 Scripts Disponibles
 
 En el directorio del proyecto, puedes ejecutar:

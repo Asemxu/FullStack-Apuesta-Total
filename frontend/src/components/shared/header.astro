@@ -4,7 +4,7 @@ import Input from "./input.astro";
 const { user } = Astro.props;
 let token = user.token;
 let role = user.role;
-let email = user.email
+let email = user.email;
 ---
 
 <header
@@ -23,10 +23,16 @@ let email = user.email
 </header>
 
 <script>
-    
-    import { HTMLELEMENTS, REQUEST, ROLES, ROUTES, SOCKET, TOAST } from "@/helpers/constants";
-import showToast from "@/utils/showToast";
-import { navigate } from "astro:transitions/client";
+    import {
+        HTMLELEMENTS,
+        REQUEST,
+        ROLES,
+        ROUTES,
+        SOCKET,
+        TOAST,
+    } from "@/helpers/constants";
+    import showToast from "@/utils/showToast";
+    import { navigate } from "astro:transitions/client";
     import io from "socket.io-client";
     const emailUser = document.querySelector(
         HTMLELEMENTS.ID.EMAILUSER,
@@ -38,27 +44,36 @@ import { navigate } from "astro:transitions/client";
 
     if (userRole.value === ROLES.USER) {
         socket.emit(SOCKET.EVENTS.USER.JOINUSER, emailUser.value);
-        socket.on(SOCKET.EVENTS.USER.APPROVALNOTIFICATION, ({accept , accepted}) => 
-        {
-            if(accept === REQUEST.STATUS.ACCEPTED.ISACCEPTED)
-                showToast(TOAST.TYPES.SUCCESS,`Se ah aprobado el la solicitud de total de ${accepted.total_pokemons} pokemones con un valor de una medalla de ${accepted.medal.toLowerCase()}`)
-            else
-                showToast(TOAST.TYPES.ERROR,`Se ah rechazado la solicitud de registro de total de ${accepted.total_pokemons} pokemones con un valor de una medalla de ${accepted.medal.toLowerCase()}`)
-           
-        });
+        socket.on(
+            SOCKET.EVENTS.USER.APPROVALNOTIFICATION,
+            ({ accept, accepted }) => {
+                if (accept === REQUEST.STATUS.ACCEPTED.ISACCEPTED)
+                    showToast(
+                        TOAST.TYPES.SUCCESS,
+                        `Se ah aprobado el la solicitud de total de ${accepted.total_pokemons} pokemones con un valor de una medalla de ${accepted.medal.toLowerCase()}`,
+                    );
+                else
+                    showToast(
+                        TOAST.TYPES.ERROR,
+                        `Se ah rechazado la solicitud de registro de total de ${accepted.total_pokemons} pokemones con un valor de una medalla de ${accepted.medal.toLowerCase()}`,
+                    );
+            },
+        );
     } else {
         socket.emit(SOCKET.EVENTS.ADMIN.JOINADMIN, emailUser.value);
-        
+
         socket.on(SOCKET.EVENTS.ADMIN.USERLOGGEDIN, (data) => {
-            showToast(TOAST.TYPES.SUCCESS,SOCKET.MESSAGES.NEWUSER)
+            showToast(TOAST.TYPES.SUCCESS, SOCKET.MESSAGES.NEWUSER);
         });
         socket.on(SOCKET.EVENTS.ADMIN.USERUPLOAD, ({ user, accept }) => {
-            
-           showToast(TOAST.TYPES.SUCCESS,`El usuario ${user.username} ha enviado un registro con un total de ${accept.total_pokemons} pokemones para su aprobación`)
+            showToast(
+                TOAST.TYPES.SUCCESS,
+                `El usuario ${user.username} ha enviado un registro con un total de ${accept.total_pokemons} pokemones para su aprobación`,
+            );
 
-           setTimeout(() => {
-                navigate(ROUTES.ADMIN.ACCEPTREQUEST)
-           },3000)
+            setTimeout(() => {
+                navigate(ROUTES.ADMIN.ACCEPTREQUEST.PATH);
+            }, 3000);
         });
     }
 </script>

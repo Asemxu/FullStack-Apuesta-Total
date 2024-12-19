@@ -11,7 +11,7 @@ let tokenUser
 if(data){
 	const user: User = JSON.parse(data.value) as User
 	if(isAdmin(user.role))
-		return Astro.redirect(ROUTES.ADMIN.ACCEPTREQUEST);
+		return Astro.redirect(ROUTES.ADMIN.ACCEPTREQUEST.PATH);
 	tokenUser = user.token
 }else{
     return Astro.redirect(ROUTES.LOGIN)

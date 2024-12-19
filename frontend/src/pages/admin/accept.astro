@@ -16,7 +16,7 @@ const { data } = await Astro.callAction(actions.getCookies,{}) || {};
 if(data){
 	user = JSON.parse(data.value) as User
 	if(!isAdmin(user.role))
-		return Astro.redirect(ROUTES.USER.UPLOADPOKEMONS);
+		return Astro.redirect(ROUTES.USER.UPLOADPOKEMONS.PATH);
 }else{
     return Astro.redirect(ROUTES.LOGIN)
 }

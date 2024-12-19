@@ -108,12 +108,24 @@ export const VISIBILITY = {
 export const ROUTES = {
     LOGIN: "/",
     USER: {
-        UPLOADPOKEMONS: "/user/upload-pokemons",
-        ACHIEVEMENTS: "/user/achievements",
+        UPLOADPOKEMONS:  {
+           PATH : "/user/upload-pokemons",
+           NAME : "Subir pokemones"
+        },
+        ACHIEVEMENTS:  {
+            PATH : "/user/achievements",
+            NAME : "Ver medallas"
+        }
     },
     ADMIN: {
-        ACCEPTREQUEST: "/admin/accept",
-        HISTORYREQUEST: "/admin/history-accepts",
+        ACCEPTREQUEST: {
+            PATH : "/admin/accept",
+            NAME : "Solicitudes Pendientes"
+         },
+        HISTORYREQUEST: {
+            PATH :  "/admin/history-accepts",
+            NAME : "Historial"
+         },
     }
 }
 

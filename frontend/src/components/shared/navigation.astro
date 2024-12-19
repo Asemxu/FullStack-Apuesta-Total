@@ -4,15 +4,15 @@ import { ROUTES } from "@/helpers/constants"
 
 <nav class="flex flex-col sm:flex-row gap-2 sm:space-x-4 mb-4 px-4 md:px-0">
     <a
-        href={ROUTES.ADMIN.ACCEPTREQUEST}
+        href={ROUTES.ADMIN.ACCEPTREQUEST.PATH}
         class="px-4 py-2 rounded text-sm md:text-base text-center bg-gray-700 text-white hover:bg-gray-600"
     >
-        Solicitudes Pendientes
+        {ROUTES.ADMIN.ACCEPTREQUEST.NAME}
     </a>
     <a
-        href={ROUTES.ADMIN.HISTORYREQUEST}
+        href={ROUTES.ADMIN.HISTORYREQUEST.PATH}
         class="px-4 py-2 rounded text-sm md:text-base text-center bg-gray-700 text-white hover:bg-gray-600"
     >
-        Historial
+        {ROUTES.ADMIN.HISTORYREQUEST.NAME}
     </a>
 </nav>

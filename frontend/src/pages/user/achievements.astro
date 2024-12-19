@@ -11,7 +11,7 @@ const { data } = (await Astro.callAction(actions.getCookies, {})) || {};
 let user: User;
 if (data) {
     user = JSON.parse(data.value) as User;
-    if (isAdmin(user.role)) return Astro.redirect(ROUTES.ADMIN.ACCEPTREQUEST);
+    if (isAdmin(user.role)) return Astro.redirect(ROUTES.ADMIN.ACCEPTREQUEST.PATH);
 } else {
     return Astro.redirect(ROUTES.LOGIN);
 }
@@ -50,10 +50,10 @@ if (responsePokemonsRegisters.ok) {
         <h1 class="text-3xl font-bold text-white my-2">Mis Medallas</h1>
         <div class="flex gap-4 justify-between w-full items-center mb-4">
             <a
-                href={ROUTES.USER.UPLOADPOKEMONS}
+                href={ROUTES.USER.UPLOADPOKEMONS.PATH}
                 class="text-white m-0 font-bold hover:text-gray-300 transition-colors duration-300"
             >
-                &larr; Subir Pokemones
+                &larr; {ROUTES.USER.UPLOADPOKEMONS.NAME}
             </a>
             <span class="text-sm text-right">Total de Pokemones registrados: {totalPokemonsRegisters}</span
             >

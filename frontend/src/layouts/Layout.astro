@@ -73,10 +73,10 @@ import showToast from "@/utils/showToast";
 					token: data.token
 				});
 				if(isAdmin(data.role)) {
-					navigate(ROUTES.ADMIN.ACCEPTREQUEST)
+					navigate(ROUTES.ADMIN.ACCEPTREQUEST.PATH)
 
 				}else{
-					navigate(ROUTES.USER.UPLOADPOKEMONS)
+					navigate(ROUTES.USER.UPLOADPOKEMONS.PATH)
 				}
 			} else {
 				showError({
@@ -143,7 +143,7 @@ import showToast from "@/utils/showToast";
 								showToast(TOAST.TYPES.SUCCESS,MESSAGES.ACCEPT.REJECT?.TEXT)
 							break;
 					}
-					navigate(ROUTES.ADMIN.ACCEPTREQUEST)
+					navigate(ROUTES.ADMIN.ACCEPTREQUEST.PATH)
 
 				}else{
 					showToast(TOAST.TYPES.ERROR,MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT)

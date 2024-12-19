@@ -27,7 +27,7 @@
 
 ## Descripción
 
-**FullStack Apuesta Total** es un desafío de gestión de registro y logros de usuarios.
+**FullStack Apuesta Total** es un desafío de gestión de registro de pokemones
 
 ## 🚀 Características
 

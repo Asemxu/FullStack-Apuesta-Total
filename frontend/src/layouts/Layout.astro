@@ -25,8 +25,8 @@ if(data){
 	<body class="h-screen flex flex-col justify-center">
 		{
 			isUser && (
-				<Header user={user}/>
-				<MainContainer typeUser={user?.role}>
+				<Header server:defer user={user}/>
+				<MainContainer server:defer typeUser={user?.role}>
 					<slot />
 				</MainContainer>
 				
@@ -56,6 +56,7 @@ import showToast from "@/utils/showToast";
 			username : email,
 			password : password
 		}
+		showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
 		try {
 			const response = await fetch(`${import.meta.env.PUBLIC_URLAPI}auth`, {
 				method: 'POST',
@@ -65,7 +66,6 @@ import showToast from "@/utils/showToast";
 				body: JSON.stringify(loginInfo)
 			});
 			const data = await response.json();
-			showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
 			if (response.ok) {
 				await actions.setCookies({
 					email: data.email,
@@ -88,6 +88,8 @@ import showToast from "@/utils/showToast";
 		} catch (error) {
 			showToast(TOAST.TYPES.ERROR,MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT)
 		}
+		showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
+
 	}
 
 	document.addEventListener(HTMLELEMENTS.EVENTS.ONCLICK, async (event) => {

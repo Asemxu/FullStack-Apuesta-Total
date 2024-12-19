@@ -19,6 +19,6 @@ if(data){
 
 ---
 
-<Layout isUser>
-    <PokemonForm  token={tokenUser}/>
+<Layout isUser server:defer>
+    <PokemonForm server:defer  token={tokenUser}/>
 </Layout>

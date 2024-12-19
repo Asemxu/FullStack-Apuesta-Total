@@ -115,7 +115,8 @@ import showToast from "@/utils/showToast";
 
 		if(element.className.includes(HTMLELEMENTS.INCLUDE.BUTTONSACTIONACCEPT)){
 			let accept = getDataAttribute(element,'accept-info','boolean')
-			const iduser = getDataAttribute(element, 'id-user', 'string'); const idregister = getDataAttribute(element, 'id-register', 'number');
+			const iduser = getDataAttribute(element, 'id-user', 'string'); 
+			const idregister = getDataAttribute(element, 'id-register', 'number');
 			const userToken = document.querySelector(HTMLELEMENTS.ID.TOKENUSER) as HTMLInputElement
 			try{
 				const response = await fetch(`${import.meta.env.PUBLIC_URLAPI}admin/accept`, {

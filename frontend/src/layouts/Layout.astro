@@ -56,7 +56,7 @@ import showToast from "@/utils/showToast";
 			username : email,
 			password : password
 		}
-		showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
+		showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.SHOW)
 		try {
 			const response = await fetch(`${import.meta.env.PUBLIC_URLAPI}auth`, {
 				method: 'POST',
@@ -72,6 +72,7 @@ import showToast from "@/utils/showToast";
 					role: data.rol,
 					token: data.token
 				});
+				showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
 				if(isAdmin(data.role)) {
 					navigate(ROUTES.ADMIN.ACCEPTREQUEST.PATH)
 
@@ -84,11 +85,14 @@ import showToast from "@/utils/showToast";
 					message: data.message,
 					nameError : MESSAGES.LOGIN.ERROR.EMAIL.NAME
 				} as Validation)
+				showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
+
 			}
 		} catch (error) {
 			showToast(TOAST.TYPES.ERROR,MESSAGES.HTTP.ERROR.UNEXPECTED.TEXT)
+			showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
+
 		}
-		showOrHideLoader(HTMLELEMENTS.ID.LOGINLOADER,VISIBILITY.HIDDEN)
 
 	}
 

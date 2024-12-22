@@ -42,7 +42,7 @@
 - <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="40"/> **TypeScript**: Para añadir tipado estático y mejorar la calidad del código.
 - <img src="https://avatars.githubusercontent.com/u/5658226?s=200&v=4" alt="Express.js" width="40"/> **Express**: Framework de servidor web para Node.js.
 - <img src="https://sequelize.org/img/logo.svg" alt="Sequelize" width="40"/> **Sequelize**: ORM para Node.js y MySQL.
-- <img src="https://th.bing.com/th?id=ODLS.4662eebb-84bb-4ef8-b9b5-5572a09715c3&w=32&h=32&qlt=91&pcl=fffffa&o=6&pid=1.2" alt="WebSockets" width="40"/> **WebSockets**: Para la comunicación en tiempo real usnado socket IO.
+- <img src="https://th.bing.com/th?id=ODLS.4662eebb-84bb-4ef8-b9b5-5572a09715c3&w=32&h=32&qlt=91&pcl=fffffa&o=6&pid=1.2" alt="WebSockets" width="40"/> **WebSockets**: Para la comunicación en tiempo real usando socket IO.
 - <img src="https://th.bing.com/th?id=ODLS.1087b558-ec95-42e8-8bde-f0c3bd1b328e&w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="JWT" width="40"/> **JWT**: Para autenticación segura.
 - <img src="https://th.bing.com/th?id=OSAAS.CF3B5EE8236922CF7C85C1745DE395A5&w=72&h=72&c=17&rs=1&o=6&pid=TechQna" alt="MySQL" width="40"/> **MySQL**: Sistema de gestión de bases de datos relacional.
 - <img src="https://th.bing.com/th?id=ODLS.9f26d577-d16e-42f8-b737-0619a7eab023&w=32&h=32&qlt=96&pcl=fffffa&o=6&pid=1.2" alt="JavaScript" width="40"/> **JavaScript**: Lenguaje de programación utilizado para la lógica del frontend y backend.

@@ -1,8 +1,9 @@
-import { defineConfig } from 'vitest/config';
+/// <reference types="vitest" />
+import { getViteConfig } from 'astro/config';
 
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node',
-  },
+export default getViteConfig({
+	test: {
+		/* for example, use global to avoid globals imports (describe, test, expect): */
+		// globals: true,
+	},
 });

@@ -19,7 +19,7 @@ const login = async ({ username, password }) => {
                 _id: user.id,
                 role: user.rol
             },
-            "JWT-SECRET",
+            process.env.JWT_SECRET,
             {
                 expiresIn: 60 * 60 * 24 // 24 hours
             }

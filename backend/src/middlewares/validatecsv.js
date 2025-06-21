@@ -3,8 +3,8 @@ const formatCSV = require('../utils/formatCSV')
 
 
 const validateCSV = (schema) => (req, res, next) => {
-    if (!req.file || req.file.mimetype !== 'text/csv') {
-        return res.status(400).send('Por favor, sube un archivo .csv');
+    if (!req.file || req.file.mimetype !== 'text/csv' || req.file.size > 1024 * 1024) {
+        return res.status(400).send('Por favor, sube un archivo .csv de máximo 1MB');
     }
 
     let csvContent = formatCSV(req.file)

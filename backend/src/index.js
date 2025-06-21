@@ -1,3 +1,4 @@
+const helmet = require('helmet');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors')
@@ -10,11 +11,35 @@ const { verifyRole } = require('./middlewares/validaterole');
 const { requireAuth } = require('./middlewares/auth');
 const ROLES = require('./constants/roles');
 const socketIO = require("socket.io");
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server)
 
+const swaggerSpec = swaggerJsdoc({
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Apuesta Total API',
+      version: '1.0.0',
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [{ bearerAuth: [] }],
+  },
+  apis: ['./src/routes/*.js'],
+});
+
+
+app.use(helmet());
 
 app.use(cors({
   origin: "*"
@@ -40,12 +65,11 @@ app.use('/v1/admin' , requireAuth ,verifyRole(ROLES.ADMIN), admin);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  console.error(err.message, err.stack);
   res.status(statusCode).json({'message': err.message});
   return;
 });
 
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 io.on('connection', (socket) => {
   console.log('Nuevo cliente conectado');

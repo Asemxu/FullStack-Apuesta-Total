@@ -16,7 +16,7 @@ async function listHistory(req, res, next) {
     const accepts = await adminService.listAll(isQuery)
     return res.json(accepts);
   } catch (ex) {
-    res.status(400).json({ message: ex.message });
+   next(ex);
   }
 }
 
@@ -29,7 +29,7 @@ async function accept(req, res, next) {
     socketService.sendAprovadNotification(accept , accepted , iduser ,socketio)
     return res.json(accepts);
   } catch (ex) {
-    res.status(400).json({ message: ex.message });
+    next(ex);
   }
 }
 

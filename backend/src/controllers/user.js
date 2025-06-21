@@ -10,7 +10,7 @@ async function upload(req, res, next) {
     sockerService.uploadPokemons(user,accept,socketiod)
     return res.json( { data : accept , register : accept.total_pokemons } );
   } catch (ex) {
-    res.status(400).json({ message: ex.message });
+    next(ex);
   }
 }
 
@@ -20,7 +20,7 @@ async function totalRegisters(req, res, next) {
     const accept = await userService.totalRegisters(req.user._id)
     return res.json(accept);
   } catch (ex) {
-    res.status(400).json({ message: ex.message });
+    next(ex);
   }
 }
 

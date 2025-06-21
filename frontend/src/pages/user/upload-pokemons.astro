@@ -10,15 +10,15 @@ const { data } = await Astro.callAction(actions.getCookies,{}) || {};
 let tokenUser
 if(data){
 	const user: User = JSON.parse(data.value) as User
+	console.log(user)
 	if(isAdmin(user.role))
 		return Astro.redirect(ROUTES.ADMIN.ACCEPTREQUEST.PATH);
 	tokenUser = user.token
 }else{
     return Astro.redirect(ROUTES.LOGIN)
 }
-
 ---
 
-<Layout isUser server:defer>
-    <PokemonForm server:defer  token={tokenUser}/>
+<Layout isUser>
+    <PokemonForm  token={tokenUser}/>
 </Layout>

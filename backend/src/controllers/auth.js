@@ -13,8 +13,7 @@ async function login(req, res, next) {
       email
     });
   } catch (ex) {
-    console.log(ex)
-    res.status(400).json({ message: ex.message });
+    next(ex);
   }
 }
 
@@ -25,7 +24,7 @@ async function register(req, res, next) {
     const user = await authService.register({ username , password })
     return res.json(user);
   } catch (ex) {
-    res.status(400).json({ message: ex.message });
+    next(ex);
   }
 }
 

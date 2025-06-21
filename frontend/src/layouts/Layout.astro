@@ -9,8 +9,11 @@ const { isUser} = Astro.props;
 const { data } = await Astro.callAction(actions.getCookies,{}) || {};
 
 if(data){
-	user = JSON.parse(data.value)
+	user = JSON.parse(data.value
+
+	)
 }
+
 ---
 
 <!doctype html>
@@ -25,8 +28,8 @@ if(data){
 	<body class="h-screen flex flex-col justify-center">
 		{
 			isUser && (
-				<Header server:defer user={user}/>
-				<MainContainer server:defer typeUser={user?.role}>
+				<Header  user={user}/>
+				<MainContainer  typeUser={user?.role}>
 					<slot />
 				</MainContainer>
 				
